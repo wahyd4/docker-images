@@ -64,8 +64,8 @@ RUN set -ex; \
 	make -C /usr/src/redis -j "$(nproc)"; \
 	make -C /usr/src/redis install; \
 	\
-	rm -r /usr/src/redis; \
-	\
+	# rm -r /usr/src/redis; \
+	# \
 	apt-get purge -y --auto-remove $buildDeps
 
 RUN mkdir /data && chown redis:redis /data
@@ -73,7 +73,6 @@ VOLUME /data
 WORKDIR /data
 
 COPY redis.conf /root
-COPY redis-trib.rb /root
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
