@@ -11,7 +11,7 @@ RUN set -ex; \
 	fetchDeps='ca-certificates wget'; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends $fetchDeps; \
-  apt-get install -y ruby \
+  apt-get install -y ruby; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 	dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
