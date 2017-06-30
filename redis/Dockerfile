@@ -42,7 +42,8 @@ RUN set -ex; \
 	'; \
 	apt-get update; \
 	apt-get install -y $buildDeps --no-install-recommends; \
-	rm -rf /var/lib/apt/lists/*; \
+	apt-get install -y ruby; \
+  rm -rf /var/lib/apt/lists/*; \
 	\
 	wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
 	echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c -; \
@@ -72,8 +73,10 @@ VOLUME /data
 WORKDIR /data
 
 COPY redis.conf /root
+COPY redis-trib.rb /root
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 EXPOSE 6379
