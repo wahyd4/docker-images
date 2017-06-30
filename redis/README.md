@@ -3,20 +3,24 @@ This images is aim to make you create a 6 node Redis cluster in minutes
 ## Create a Redis cluster on Kubernetes
 
 1. Create a k8s deployment with Redis cluster mode.
-
-      kubectl run redis --image=registry.cn-hangzhou.aliyuncs.com/junv/cluster-redis:latest --command /usr/local/bin/redis-server /root/redis.conf
+```bash
+    kubectl run redis --image=registry.cn-hangzhou.aliyuncs.com/junv/cluster-redis:latest --command /usr/local/bin/redis-server /root/redis.conf
+```
 
 2. Expose the port if you want (optional)
-
-      kubectl expose deployment redis --type=NodePort  --port=6379
+```bash
+    kubectl expose deployment redis --type=NodePort  --port=6379
+```
 
 3. Scale up 6 pods
-
-      kubectl scale deployments redis --replicas=6
+```bash
+    kubectl scale deployments redis --replicas=6
+```
 
 4. Take a look at the redis pods
-
-      kubectl get pods -o wide | grep redis
+```bash
+    kubectl get pods -o wide | grep redis
+```
 
 ```bash
 redis-3960932871-2q6r1             1/1       Running   0          27m       172.17.0.11   minikube
@@ -29,18 +33,19 @@ redis-3960932871-x5k06             1/1       Running   0          27m       172.
 ```
 
 5. Access a Redis pod, pick anyone you like.
-
+```bash
     kubectl exec -it redis-3960932871-2q6r1 bash
-
+```
 6. Go to Redis source code folder
-
+```bash
     cd /usr/src/redis/src/
+```
 
 7. Create the Redis cluster (You should type all the IPs of six pods)
-
+```bash
     ./redis-trib.rb create --replicas 1 172.17.0.11:6379 172.17.0.12:6379 172.17.0.13:6379 \
     172.17.0.14:6379 172.17.0.15:6379 172.17.0.16:6379
-
+```
 8. Type "yes" when you saw this
 
 ```bash
@@ -77,10 +82,11 @@ When you see something like the following, then all done!
 [OK] All 16384 slots covered.
 ```
 9. You can verify it by
-
+```bash
     redis-cli
 
     127.0.0.1:6379> cluster nodes
+```
 
 ```bash
 127.0.0.1:6379> cluster nodes
