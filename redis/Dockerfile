@@ -43,6 +43,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get install -y $buildDeps --no-install-recommends; \
 	apt-get install -y ruby; \
+  gem install redis; \
   rm -rf /var/lib/apt/lists/*; \
 	\
 	wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
