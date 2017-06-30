@@ -1,4 +1,4 @@
-This images is aim to make you create a 6 node Redis cluster in minutes
+This images is aim to help you create a 6 - node Redis cluster in minutes
 
 ## Create a Redis cluster on Kubernetes
 
