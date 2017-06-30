@@ -52,7 +52,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 RUN pwd
-COPY redis.conf /usr/local/redis
+COPY redis.conf /root
 
 EXPOSE 6379
-CMD ["redis-server", "/usr/local/redis/redis.conf"]
+CMD ["redis-server"]
