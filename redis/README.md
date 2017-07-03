@@ -1,42 +1,44 @@
 This images is aim to help you create a 6 - node Redis cluster in minutes
 
+## Build the Docker image by yourself
+```bash
+cd redis
+docker build -t cluster-redis:latest .
+```
+
 ## Create a Redis cluster on Kubernetes
 
 1. Create a Redis Statefulset and a Service
 ```bash
-  kubectl create -f redis/redis.yml
+kubectl create -f redis/redis.yml
 ```
 
-4. Take a look at the redis pods
+ Now Take a look at the redis pods
 ```bash
-  kubectl get pods -o wide | grep redis
+kubectl get pods -o wide | grep redis
 ```
 
 ```bash
-redis-3960932871-2q6r1             1/1       Running   0          27m       172.17.0.11   minikube
-redis-3960932871-6383l             1/1       Running   0          28m       172.17.0.16   minikube
-redis-3960932871-dktnt             1/1       Running   0          27m       172.17.0.14   minikube
-redis-3960932871-qktzm             1/1       Running   0          27m       172.17.0.12   minikube
-redis-3960932871-tlgw3             1/1       Running   0          28m       172.17.0.15   minikube
-redis-3960932871-x5k06             1/1       Running   0          27m       172.17.0.13   minikube
-
+redis-0                            1/1       Running   0          9m        172.17.0.7    minikube
+redis-1                            1/1       Running   0          9m        172.17.0.9    minikube
+redis-2                            1/1       Running   0          9m        172.17.0.10   minikube
+redis-3                            1/1       Running   0          9m        172.17.0.11   minikube
+redis-4                            1/1       Running   0          9m        172.17.0.12   minikube
+redis-5                            1/1       Running   0          9m        172.17.0.15   minikube
 ```
 
-5. Access a Redis pod, pick anyone you like.
+2. Access a Redis pod, pick anyone you like.
 ```bash
-    kubectl exec -it redis-3960932871-2q6r1 bash
-```
-6. Go to Redis source code folder
-```bash
-    cd /usr/src/redis/src/
+kubectl exec -it redis-0 bash
 ```
 
-7. Create the Redis cluster (You should type all the IPs of six pods)
+3. Go to Redis source code folder, and create the Redis cluster (You should type all the IPs of six pods)
 ```bash
-    ./redis-trib.rb create --replicas 1 172.17.0.11:6379 172.17.0.12:6379 172.17.0.13:6379 \
-    172.17.0.14:6379 172.17.0.15:6379 172.17.0.16:6379
+cd /usr/src/redis/src/
+./redis-trib.rb create --replicas 1 172.17.0.11:6379 172.17.0.12:6379 172.17.0.13:6379 \
+172.17.0.14:6379 172.17.0.15:6379 172.17.0.16:6379
 ```
-8. Type "yes" when you saw this
+4. Type "yes" when you saw this
 
 ```bash
 >>> Creating cluster
@@ -71,11 +73,11 @@ When you see something like the following, then all done!
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
 ```
-9. You can verify it by
+You can verify the cluster by
 ```bash
-    redis-cli
+redis-cli -c
 
-    127.0.0.1:6379> cluster nodes
+127.0.0.1:6379> cluster nodes
 ```
 
 ```bash
