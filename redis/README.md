@@ -2,24 +2,14 @@ This images is aim to help you create a 6 - node Redis cluster in minutes
 
 ## Create a Redis cluster on Kubernetes
 
-1. Create a k8s deployment with Redis cluster mode.
+1. Create a Redis Statefulset and a Service
 ```bash
-    kubectl run redis --image=registry.cn-hangzhou.aliyuncs.com/junv/cluster-redis:latest --command /usr/local/bin/redis-server /root/redis.conf
-```
-
-2. Expose the port if you want (optional)
-```bash
-    kubectl expose deployment redis --type=NodePort  --port=6379
-```
-
-3. Scale up 6 pods
-```bash
-    kubectl scale deployments redis --replicas=6
+  kubectl create -f redis/redis.yml
 ```
 
 4. Take a look at the redis pods
 ```bash
-    kubectl get pods -o wide | grep redis
+  kubectl get pods -o wide | grep redis
 ```
 
 ```bash
