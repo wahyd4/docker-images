@@ -13,7 +13,7 @@ docker build -t cluster-redis:latest .
 kubectl create -f redis/redis.yml
 ```
 
- Now Take a look at the redis pods
+ Now Take a look at the Redis pods
 ```bash
 kubectl get pods -o wide | grep redis
 ```
@@ -77,10 +77,6 @@ You can verify the cluster by
 ```bash
 redis-cli -c
 
-127.0.0.1:6379> cluster nodes
-```
-
-```bash
 127.0.0.1:6379> cluster nodes
 9268d2a235026a4acfaaf9d3e969ec7a559d6e9b 10.244.8.163:6379 master - 1498813397795 1498813395292 3 connected 10923-16383
 865583db4ee9a68acea1c2d81f89456a6c8bfb68 10.244.1.129:6379 slave e1786c92ae16c92bd122fb614b80920a88bddc94 1498813399298 1498813397194 5 connected
